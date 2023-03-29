@@ -12,25 +12,66 @@ import WaitFlow from "./sub/WaitFlow";
 import WhileFlow from "./sub/WhileFlow";
 import InputFlow from "./sub/InputFlow";
 import Row from "../../component/Row";
-import initFlow from "./data/flowInit";
+import { useState } from "react";
+import Element from "./Element";
+import * as flowInit from "./data/flowInit"
 
 export default function Flow({ props }){
 
-  let flow = props.flow;
-  initFlow(flow);
+  const [flow, setFlow] = useState({...props.flow});
+  const [showEle, setShowEle] = useState(false);
+  const [ele, setEle] = useState(flowInit.default.initElement({}));
+
   console.log('inited.flow', flow);
 
   function handlePerform(event){
-    flow[event.target.name] = event.target.value;
-    initFlow(flow);
-    console.log('inited.flow', flow);
-    props.setFlow(flow);
+    flow.perform = event.target.value;
+    setFlow({
+      perform: event.target.value
+    })
+    setShowEle(!!flows.filter(a => a.name === event.target.value)[0].showEle);
+  }
+
+  function handleEle(updateEle){
+    setEle({
+      ...ele,
+      updateEle
+    })
+  }
+
+  function handleAnyEle(type, anyEle){
+    if(type === 1){ // add
+      setEle({
+        ...ele,
+        anyElements: [
+          ...ele.anyElements,
+          anyEle
+        ]
+      })
+    }else if(type === 2){ // update
+      setEle({
+        ...ele,
+        anyElements: ele.anyElements.map(a => {
+          if(a._id === anyEle._id){
+            return anyEle;
+          }else{
+            return a;
+          }
+        })
+      })
+    }else{ // delete
+      setEle({
+        ...ele,
+        anyElements: ele.anyElements.filter(a => a._id !== anyEle._id)
+      })
+    }
   }
 
   function saveFlow(){
     console.log('save.flow', flow);
     props.setFlow(flow);
   }
+
   return (
     <div className="flow">
       <fieldset>
@@ -44,6 +85,13 @@ export default function Flow({ props }){
             }
           </select>
         </Row>
+        {
+          showEle && <Element props={{
+            ele: ele,
+            handleEle: handleEle,
+            handleAnyEle: handleAnyEle
+          }} />
+        }
         <Row>
             {
               flow.perform === 'buildIn' &&

@@ -62,6 +62,7 @@ export const flows = [
   },
   {
     name: "cache",
+    showEle: true,
     desc: "存储"
   },
   {
@@ -70,10 +71,12 @@ export const flows = [
   },
   {
     name: "click",
+    showEle: true,
     desc: "点击"
   },
   {
     name: "input",
+    showEle: true,
     desc: "输入"
   },
   {
@@ -82,6 +85,7 @@ export const flows = [
   },
   {
     name: "recycleView",
+    showEle: true,
     desc: "recycleView列表"
   },
   {
@@ -90,6 +94,7 @@ export const flows = [
   },
   {
     name: "swipe",
+    showEle: true,
     desc: "滑动"
   },
   {
