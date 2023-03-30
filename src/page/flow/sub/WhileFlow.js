@@ -1,20 +1,27 @@
 import Row from "../../../component/Row";
 import Broke from "./Broke";
+import FlowList from "../FlowList";
 
 // 循环流程
-export default function WhileFlow( props ){
-
-  const flow = props.flow;
+export default function WhileFlow({props: {flow, broke, handleFlow, handleBroke}}){
 
   function handleWhile(event){
     flow[event.target.name] = event.target.value;
-    props.setFlow(flow);
+    handleFlow(flow);
+  }
+
+  function handleFlows(flows){
+    flow.flows = flows;
+    handleFlow(flow);
   }
 
   return (
     <Row>
       <Row>
-        <Broke {...flow.broke} />
+        <Broke props={{
+          broke: broke,
+          handleBroke: handleBroke
+        }} />
       </Row>
       <Row>
         <label>每次循环的间隔: </label>
@@ -24,9 +31,11 @@ export default function WhileFlow( props ){
         <label>最大尝试次数: </label>
         <input type="number" name="maxCount" defaultValue={flow.maxCount} onChange={handleWhile} />
       </Row>
-      <Row>
-        <button type="button">循环流程</button>
-      </Row>
+      <FlowList props={{
+        btnName: "循环流程",
+        flowIdPrefix: 'while-flow',
+        handleFlows: handleFlows
+      }}/>
     </Row>
   )
 }

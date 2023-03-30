@@ -1,39 +1,19 @@
-import { useState, useRef } from "react"
+import { useState } from "react"
 import Row from "../../component/Row";
-import Flow from "./Flow";
-import { flows as flowsData } from "./data/flowData"
+import FlowList from "./FlowList";
 
 export default function Scene(){
 
-  const flowId = useRef(1);
   const [args, setArgs] = useState({
     name: '',
     flowBeforeSleep: 0,
-    flowAfterSleep: 0
+    flowAfterSleep: 0,
+    flows: []
   });
-  const [flows, setFlows] = useState([]);
   
-  function addFlow(){
-    setFlows([
-      ...flows,
-      { 
-        _flowId: flowId.current++,
-        perform: flowsData[0].name 
-      }
-    ])
-  }
-
-  function setFlow(flow){
-    console.log('setflow', flow);
-    setFlows(
-      flows.map(a => {
-        if(a._flowId === flow._flowId){
-          return flow;
-        }else{
-          return a;
-        }
-      })
-    )
+  function handleFlows(flows){
+    args.flows = [...flows];
+    setArgs(args)
   }
 
   function changeArgs(event){
@@ -44,22 +24,13 @@ export default function Scene(){
   return (
     <div className="scene">
       <Row>
-        <label>活动名称</label>
+        <label>功能名称</label>
         <input defaultValue={args.name} onChange={changeArgs}/>
       </Row>
-      <Row>
-        <button type="button" onClick={addFlow}>添加流程</button>
-      </Row>
-      <Row>
-        {
-          flows.map(a => {
-            return (<Flow key={a._flowId} props={{
-              flow: a,
-              setFlow: setFlow
-            }}/>)
-          })
-        }
-      </Row>
+      <FlowList key="" props={{
+        flowIdPrefix: 'scene-flow',
+        handleFlows: handleFlows
+      }} />
     </div>
   )
 }

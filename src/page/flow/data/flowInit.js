@@ -1,4 +1,15 @@
+import { flows } from "./flowData";
+
 let globalId = 1;
+const createFlow = (prefix, otherValues = {}) => {
+  const flow = {...otherValues};
+  flow._id = `${prefix}-${globalId++}`
+  flow._id_prefix = prefix;
+  if(!!flow.perform){
+    initFlow(flow);
+  }
+  return flow;
+}
 const initFlow = (flow) => {
   if(!!flow._init){
     return;
@@ -19,7 +30,9 @@ const initFlow = (flow) => {
       default: break;
     }
     flow.name = '';
-    flow.element = initElement();
+    if(flows.filter(a => a.name === flow.perform)[0].showEle){
+      flow.element = initElement();
+    }
     flow.description = '';
     flow._init = true;
   }
@@ -43,8 +56,17 @@ const initElement = () => {
     anyElements: [ ]
   }
 }
+const initSingleElement = () => {
+  return {
+    _id: `element-${globalId++}`,
+    id: '',
+    text: '',
+    notInRoot: false,
+    optional: false,
+    multi: false
+  }
+}
 const initBuildIn = (flow) => {
-  flow._id = `build-in-${globalId++}`;
   flow.methodName = '';
   flow.argName = '';
   flow.argValue = '';
@@ -52,7 +74,6 @@ const initBuildIn = (flow) => {
   return flow;
 }
 const initCache = (flow) => {
-  flow._id = `cache-${globalId++}`;
   flow.index = 0;
   flow.viewId = '';
   flow.cacheKey = '';
@@ -60,27 +81,28 @@ const initCache = (flow) => {
   return flow;
 }
 const initCheck = (flow) => {
-  flow._id = `check-${globalId++}`;
   flow.activity = '';
-  flow.match = {
-    _id: `check-match-${globalId++}`,
-    name: '',
-    flows: []
-  };
-  flow.mismatch = {
-    _id: `check-mismatch-${globalId++}`,
-    name: '',
-    flows: []
-  };
   flow.optional = false;
+  flow.match = initMatch({});
+  flow.mismatch = initMismatch({});
   return flow;
 }
+const initMatch = (match) => {
+  match._id = `check-match-${globalId++}`
+  match.name = ''
+  match.flows = []
+  return match;
+}
+const initMismatch = (mismatch) => {
+  mismatch._id = `check-mismatch-${globalId++}`
+  mismatch.name = ''
+  mismatch.flows = []
+  return mismatch;
+}
 const initClick = (flow) => {
-  flow._id = `click-${globalId++}`;
   return flow;
 }
 const initInput = (flow) => {
-  flow._id = `input-${globalId++}`;
   flow.text = '';
   flow.randomMax = '';
   flow.randomMin = '';
@@ -89,13 +111,11 @@ const initInput = (flow) => {
   return flow;
 }
 const initPressKey = (flow) => {
-  flow._id = `press-key-${globalId++}`;
   flow.keyType = '';
   flow.key = 0;
   return flow;
 }
 const initRecycleView = (flow) => {
-  flow._id = `recycle-view-${globalId++}`;
   flow.numberPerPage = 0;
   flow.rangeBegin = -1;
   flow.rangeEnd = -1;
@@ -107,32 +127,26 @@ const initRecycleView = (flow) => {
   return flow;
 }
 const initSleep = (flow) => {
-  flow._id = `sleep-${globalId++}`;
   flow.sleep = 0;
   return flow;
 }
 const initSwipe = (flow) => {
-  flow._id = `swipe-${globalId++}`;
   flow.direction = '';
   return flow;
 }
 const initWait = (flow) => {
-  flow._id = `wait-${globalId++}`;
-  flow.broke = initBroke();
   flow.time = 1;
   flow.maxTime = 60;
   flow.flows = [];
   return flow;
 }
 const initWhile = (flow) => {
-  flow._id = `while-${globalId++}`;
-  flow.broke = initBroke();
   flow.sleepTime = 0;
   flow.maxCount = -1;
   flow.flows = [];
   return flow;
 }
 
-export default {initFlow, initBroke, initBuildIn, initCache, initClick, 
+export {initFlow, initBroke, initBuildIn, initCache, initClick, 
   initElement, initInput, initPressKey, initRecycleView, 
-  initSleep, initSwipe, initWait, initWhile}
+  initSleep, initSwipe, initWait, initWhile, initSingleElement, initMatch, initMismatch, createFlow}

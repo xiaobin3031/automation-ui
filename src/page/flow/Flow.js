@@ -1,5 +1,5 @@
 // 一个流程
-import { flows } from "./data/flowData"
+import { flows as flowsData } from "./data/flowData"
 import BuildInFlow from "./sub/BuildInFlow";
 import CacheFlow from "./sub/CacheFlow";
 import CheckFlow from "./sub/CheckFlow";
@@ -15,28 +15,34 @@ import Row from "../../component/Row";
 import { useState } from "react";
 import Element from "./Element";
 import * as flowInit from "./data/flowInit"
+import Select from "../../component/Select";
 
-export default function Flow({ props }){
+export default function Flow({props: {flow, setFlow}}){
 
-  const [flow, setFlow] = useState({...props.flow});
-  const [showEle, setShowEle] = useState(false);
-  const [ele, setEle] = useState(flowInit.default.initElement({}));
-
-  console.log('inited.flow', flow);
+  let _showEle = flowsData.filter(a => a.name === flow.perform)[0];
+  if(!!_showEle){
+    _showEle = _showEle.showEle;
+  }else{
+    _showEle = false;
+  }
+  const [showEle, setShowEle] = useState(_showEle);
+  const [ele, setEle] = useState(flowInit.initElement({}));
+  const [broke, setBroke] = useState(flowInit.initBroke({}));
 
   function handlePerform(event){
-    flow.perform = event.target.value;
+    const newFlow = {_id: flow._id, _id_prefix: flow._id_prefix};
+    newFlow.perform = event.target.value;
+    setShowEle(!!flowsData.filter(a => a.name === event.target.value)[0].showEle);
+    flowInit.initFlow(newFlow);
     setFlow({
+      ...newFlow,
       perform: event.target.value
     })
-    setShowEle(!!flows.filter(a => a.name === event.target.value)[0].showEle);
   }
 
   function handleEle(updateEle){
-    setEle({
-      ...ele,
-      updateEle
-    })
+    setEle({ ...ele, ...updateEle })
+    handleFlow({element: ele})
   }
 
   function handleAnyEle(type, anyEle){
@@ -48,42 +54,39 @@ export default function Flow({ props }){
           anyEle
         ]
       })
-    }else if(type === 2){ // update
-      setEle({
-        ...ele,
-        anyElements: ele.anyElements.map(a => {
-          if(a._id === anyEle._id){
-            return anyEle;
-          }else{
-            return a;
-          }
-        })
-      })
-    }else{ // delete
+    }else if(type === 2){ // delete
       setEle({
         ...ele,
         anyElements: ele.anyElements.filter(a => a._id !== anyEle._id)
       })
+    }else{ // update
+      setEle({
+        ...ele,
+        anyElements: ele.anyElements.map(a => a._id === anyEle._id ? anyEle: a)
+      })
     }
+  }
+
+  function handleFlow(updateFlow){
+    setFlow({ ...flow, ...updateFlow })
+  }
+
+  function handleBroke(updateBroke){
+    setBroke({ ...broke, ...updateBroke })
+    handleFlow({broke: broke});
   }
 
   function saveFlow(){
     console.log('save.flow', flow);
-    props.setFlow(flow);
+    setFlow(flow);
   }
 
   return (
     <div className="flow">
       <fieldset>
-        <legend>流程: {flow.id}</legend>
+        <legend>流程: {flow._id}</legend>
         <Row>
-          <select name="perform" onChange={handlePerform} defaultValue={flow.perform}>
-            {
-              flows.map(a => {
-                return (<option value={a.name} key={a.name}>{a.desc || a.name}</option>)
-              })
-            }
-          </select>
+          <Select list={flowsData} attr={{ defaultValue: flow.perform, onChange: handlePerform }} />
         </Row>
         {
           showEle && <Element props={{
@@ -95,47 +98,58 @@ export default function Flow({ props }){
         <Row>
             {
               flow.perform === 'buildIn' &&
-                <BuildInFlow {...props} />
+                <BuildInFlow props={{
+                  flow: flow,
+                  handleFlow: handleFlow
+                }} />
             }
             {
               flow.perform === 'cache' &&
-                <CacheFlow {...props}/>
+                <CacheFlow props={{
+                  flow: flow,
+                  handleFlow: handleFlow
+                }}/>
             }
             {
               flow.perform === 'check' &&
-                <CheckFlow {...props}/>
+                <CheckFlow props={{ flow: flow, handleFlow: handleFlow }}/>
             }
             {
               flow.perform === 'click' &&
-                <ClickFlow {...props}/>
+                <ClickFlow props={{ flow: flow, handleFlow: handleFlow }}/>
             }
             {
               flow.perform === 'input' &&
-                <InputFlow {...props}/>
+                <InputFlow props={{ flow: flow, handleFlow: handleFlow }}/>
             }
             {
               flow.perform === 'pressKey' &&
-                <PressKeyFlow {...props}/>
+                <PressKeyFlow props={{ flow: flow, handleFlow: handleFlow }}/>
             }
             {
               flow.perform === 'recycleView' &&
-                <RecycleViewFlow {...props}/>
+                <RecycleViewFlow props={{ flow: flow, handleFlow: handleFlow }}/>
             }
             {
               flow.perform === 'sleep' &&
-                <SleepFlow {...props}/>
+                <SleepFlow props={{ flow: flow, handleFlow: handleFlow }}/>
             }
             {
               flow.perform === 'swipe' &&
-                <SwipeFlow {...props}/>
+                <SwipeFlow props={{ flow: flow, handleFlow: handleFlow }}/>
             }
             {
               flow.perform === 'wait' &&
-                <WaitFlow {...props}/>
+                <WaitFlow props={{ flow: flow, handleFlow: handleFlow }}/>
             }
             {
               flow.perform === 'while' &&
-                <WhileFlow {...props}/>
+                <WhileFlow props={{
+                  flow: flow,
+                  broke: broke,
+                  handleFlow: handleFlow,
+                  handleBroke: handleBroke
+                }}/>
             }
         </Row>
         <Row>

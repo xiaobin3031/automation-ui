@@ -67,6 +67,7 @@ export const flows = [
   },
   {
     name: "check",
+    showEle: true,
     desc: "检查"
   },
   {

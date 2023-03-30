@@ -3,13 +3,11 @@ import { buildIn } from '../data/flowData'
 import Row from '../../../component/Row'
 import Select from '../../../component/Select';
 
-export default function BuildInFlow(props){
-
-  const flow = props.flow;
+export default function BuildInFlow({props: {flow, handleFlow}}){
 
   function handleMethodName(event){
     flow[event.target.name] = event.target.value;
-    props.setFlow(flow);
+    handleFlow(flow);
   }
 
   return (

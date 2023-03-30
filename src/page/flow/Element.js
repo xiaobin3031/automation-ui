@@ -2,28 +2,52 @@
 import Row from "../../component/Row"
 import CombineElement from "./CombineElement"
 import SingleElement from "./SingleElement"
+import { initSingleElement } from "./data/flowInit"
 
-export default function Element( ele ){
+export default function Element({props:{ ele, handleEle }}){
 
-  console.log('element', ele);
   function addCombileEle(){
+    const singleEle = initSingleElement({});
+    ele.anyElements.push(singleEle);
+    handleEle(ele);
+  }
 
+  function handleEleAny(updateEle, type){
+    if(!!type){ //delete
+      ele.anyElements = ele.anyElements.filter(a => a._id !== updateEle._id);
+    }else{ //update
+      ele.anyElements = ele.anyElements.map(a => a._id === updateEle._id ? updateEle: a);
+    }
+    handleEle(ele);
   }
 
   return (
     <div className="flow-element">
-      <SingleElement {...ele} />
-      <Row>
-        <button type="button" onClick={addCombileEle}>组合元素</button>
-      </Row>
-      <Row>
+      <fieldset>
+        <legend>执行元素</legend>
+        <SingleElement props={{
+          ele: ele,
+          handleEle: handleEle
+        }}/>
+        <Row>
+          <button type="button" onClick={addCombileEle}>任一元素</button>
+        </Row>
         {
-          ele.anyElements && ele.anyElements.length &&
-            ele.anyElements.map(a => {
-              return (<CombineElement props={a}/>)
-            })
+          ele.anyElements && ele.anyElements.length > 0 &&
+          (
+            <Row>
+              {
+                ele.anyElements.map(a => {
+                  return (<CombineElement key={a._id} props={{
+                    ele: a,
+                    handleEle: handleEleAny
+                  }}/>)
+                })
+              }
+            </Row>
+          )
         }
-      </Row>
+      </fieldset>
     </div>
   )
 }
