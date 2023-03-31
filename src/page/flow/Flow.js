@@ -17,7 +17,7 @@ import Element from "./Element";
 import * as flowInit from "./data/flowInit"
 import Select from "../../component/Select";
 
-export default function Flow({props: {flow, setFlow}}){
+export default function Flow({props: {flow, handleFlow, saveFlow}}){
 
   let _showEle = flowsData.filter(a => a.name === flow.perform)[0];
   if(!!_showEle){
@@ -34,7 +34,7 @@ export default function Flow({props: {flow, setFlow}}){
     newFlow.perform = event.target.value;
     setShowEle(!!flowsData.filter(a => a.name === event.target.value)[0].showEle);
     flowInit.initFlow(newFlow);
-    setFlow({
+    handleFlow({
       ...newFlow,
       perform: event.target.value
     })
@@ -67,22 +67,18 @@ export default function Flow({props: {flow, setFlow}}){
     }
   }
 
-  function handleFlow(updateFlow){
-    setFlow({ ...flow, ...updateFlow })
-  }
-
   function handleBroke(updateBroke){
     setBroke({ ...broke, ...updateBroke })
-    handleFlow({broke: broke});
+    handleFlow({...flow, broke: broke});
   }
 
-  function saveFlow(){
-    setFlow(flow);
+  function saveFlowWithCheck(){
+    saveFlow(flow);
   }
 
   function delFlow(){
     if(window.confirm('是否删除该流程')){
-      setFlow(flow, 2);
+      handleFlow(flow, 2);
     }
   }
 
@@ -158,7 +154,7 @@ export default function Flow({props: {flow, setFlow}}){
             }
         </Row>
         <Row>
-          <button type="button" onClick={saveFlow}>保存</button>
+          <button type="button" onClick={saveFlowWithCheck}>保存</button>
           <button type="button" onClick={delFlow} style={{ color: 'red', 'marginLeft': '10px'}}>删除</button>
         </Row>
       </fieldset>
