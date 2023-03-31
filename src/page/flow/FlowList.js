@@ -8,6 +8,9 @@ export default function FlowList({props: { btnName = '添加流程', flowLegend 
   const [flows, setFlows] = useState([]);
 
   function addFlow(){
+    if(flows.some(a => !a._saveed)){
+      return;
+    }
     setFlows([
       ...flows,
       createFlow(flowIdPrefix)
@@ -15,14 +18,13 @@ export default function FlowList({props: { btnName = '添加流程', flowLegend 
     handleFlows(flows);
   }
 
-  function setFlow(flow){
-    const newFlows = flows.map(a => {
-        if(a._id === flow._id){
-          return flow;
-        }else{
-          return a;
-        }
-      })
+  function setFlow(flow, type){
+    let newFlows;
+    if(type === 2){ // delete
+      newFlows = flows.filter(a => a._id !== flow._id);
+    }else{ // update
+      newFlows = flows.map(a => a._id === flow._id ? flow: a)
+    }
     setFlows(newFlows)
     handleFlows(newFlows);
   }

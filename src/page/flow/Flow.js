@@ -77,8 +77,13 @@ export default function Flow({props: {flow, setFlow}}){
   }
 
   function saveFlow(){
-    console.log('save.flow', flow);
     setFlow(flow);
+  }
+
+  function delFlow(){
+    if(window.confirm('是否删除该流程')){
+      setFlow(flow, 2);
+    }
   }
 
   return (
@@ -154,7 +159,7 @@ export default function Flow({props: {flow, setFlow}}){
         </Row>
         <Row>
           <button type="button" onClick={saveFlow}>保存</button>
-          <button type="button">删除</button>
+          <button type="button" onClick={delFlow} style={{ color: 'red', 'marginLeft': '10px'}}>删除</button>
         </Row>
       </fieldset>
     </div>

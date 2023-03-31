@@ -10,7 +10,6 @@ export default function WaitFlow({props: {flow, handleFlow, broke, handleBroke}}
   }
 
   function handleFlows(flows){
-    console.log('wait.handleFlows', flows);
     flow.flows = flows;
     handleFlow(flow);
   }

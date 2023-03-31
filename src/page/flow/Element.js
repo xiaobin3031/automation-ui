@@ -7,6 +7,9 @@ import { initSingleElement } from "./data/flowInit"
 export default function Element({props:{ ele, handleEle }}){
 
   function addCombileEle(){
+    if(ele.anyElements.some(a => !a.id && !a.text)){
+      return;
+    }
     const singleEle = initSingleElement({});
     ele.anyElements.push(singleEle);
     handleEle(ele);
