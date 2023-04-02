@@ -79,6 +79,10 @@ function WhileFlow(_flow){
 export default function FlowDisplay({props: { flow, delFlow }}){
   const flowPerform = flowsData.filter(a => a.name === flow.perform)[0] || {};
 
+  function confirmToRemoteFlow(){
+
+  }
+
   return (
     <div>
       <div className="card-head">

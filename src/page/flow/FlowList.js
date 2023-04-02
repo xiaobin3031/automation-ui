@@ -64,6 +64,7 @@ export default function FlowList({props: { btnName = '添加流程', flowLegend 
             {
               flows.map(a => {
                 return (<FlowDisplay key={a._id} props={{
+                  flow: a,
                   delFlow: delFlow
                 }} />)
               })
