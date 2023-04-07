@@ -17,8 +17,9 @@ import Element from "./Element";
 import * as flowInit from "./data/flowInit"
 import Select from "../../component/Select";
 
-export default function Flow({props: {flow, handleFlow, saveFlow}}){
+export default function Flow({props: {_flow, _handleFlow, _saveFlow}}){
 
+  const flow = {..._flow};
   let _showEle = flowsData.filter(a => a.name === flow.perform)[0];
   if(!!_showEle){
     _showEle = _showEle.showEle;
@@ -26,15 +27,15 @@ export default function Flow({props: {flow, handleFlow, saveFlow}}){
     _showEle = false;
   }
   const [showEle, setShowEle] = useState(_showEle);
-  const [ele, setEle] = useState(flowInit.initElement({}));
-  const [broke, setBroke] = useState(flowInit.initBroke({}));
+  const [ele, setEle] = useState(!!flow._modify ? {...flow.element} : flowInit.initElement({}));
+  const [broke, setBroke] = useState(!!flow._modify && !!flow.broke ? {...flow.broke} : flowInit.initBroke({}));
 
   function handlePerform(event){
     const newFlow = {_id: flow._id, _id_prefix: flow._id_prefix};
     newFlow.perform = event.target.value;
     setShowEle(!!flowsData.filter(a => a.name === event.target.value)[0].showEle);
     flowInit.initFlow(newFlow);
-    handleFlow({
+    _handleFlow({
       ...newFlow,
       perform: event.target.value
     })
@@ -42,7 +43,7 @@ export default function Flow({props: {flow, handleFlow, saveFlow}}){
 
   function handleEle(updateEle){
     setEle({ ...ele, ...updateEle })
-    handleFlow({element: ele})
+    _handleFlow({element: ele})
   }
 
   function handleAnyEle(type, anyEle){
@@ -68,17 +69,18 @@ export default function Flow({props: {flow, handleFlow, saveFlow}}){
   }
 
   function handleBroke(updateBroke){
-    setBroke({ ...broke, ...updateBroke })
-    handleFlow({...flow, broke: broke});
+    const _broke = {...broke, ...updateBroke}
+    setBroke(_broke)
+    _handleFlow({...flow, broke: _broke});
   }
 
   function saveFlowWithCheck(){
-    saveFlow(flow);
+    _saveFlow(flow);
   }
 
   function delFlow(){
     if(window.confirm('是否删除该流程')){
-      handleFlow(flow, 2);
+      _handleFlow(flow, 2);
     }
   }
 
@@ -101,54 +103,54 @@ export default function Flow({props: {flow, handleFlow, saveFlow}}){
               flow.perform === 'buildIn' &&
                 <BuildInFlow props={{
                   flow: flow,
-                  handleFlow: handleFlow
+                  handleFlow: _handleFlow
                 }} />
             }
             {
               flow.perform === 'cache' &&
                 <CacheFlow props={{
                   flow: flow,
-                  handleFlow: handleFlow
+                  handleFlow: _handleFlow
                 }}/>
             }
             {
               flow.perform === 'check' &&
-                <CheckFlow props={{ flow: flow, handleFlow: handleFlow }}/>
+                <CheckFlow props={{ flow: flow, handleFlow: _handleFlow }}/>
             }
             {
               flow.perform === 'click' &&
-                <ClickFlow props={{ flow: flow, handleFlow: handleFlow }}/>
+                <ClickFlow props={{ flow: flow, handleFlow: _handleFlow }}/>
             }
             {
               flow.perform === 'input' &&
-                <InputFlow props={{ flow: flow, handleFlow: handleFlow }}/>
+                <InputFlow props={{ flow: flow, handleFlow: _handleFlow }}/>
             }
             {
               flow.perform === 'pressKey' &&
-                <PressKeyFlow props={{ flow: flow, handleFlow: handleFlow }}/>
+                <PressKeyFlow props={{ flow: flow, handleFlow: _handleFlow }}/>
             }
             {
               flow.perform === 'recycleView' &&
-                <RecycleViewFlow props={{ flow: flow, handleFlow: handleFlow }}/>
+                <RecycleViewFlow props={{ flow: flow, handleFlow: _handleFlow }}/>
             }
             {
               flow.perform === 'sleep' &&
-                <SleepFlow props={{ flow: flow, handleFlow: handleFlow }}/>
+                <SleepFlow props={{ flow: flow, handleFlow: _handleFlow }}/>
             }
             {
               flow.perform === 'swipe' &&
-                <SwipeFlow props={{ flow: flow, handleFlow: handleFlow }}/>
+                <SwipeFlow props={{ flow: flow, handleFlow: _handleFlow }}/>
             }
             {
               flow.perform === 'wait' &&
-                <WaitFlow props={{ flow: flow, handleFlow: handleFlow }}/>
+                <WaitFlow props={{ flow: flow, handleFlow: _handleFlow }}/>
             }
             {
               flow.perform === 'while' &&
                 <WhileFlow props={{
                   flow: flow,
                   broke: broke,
-                  handleFlow: handleFlow,
+                  handleFlow: _handleFlow,
                   handleBroke: handleBroke
                 }}/>
             }

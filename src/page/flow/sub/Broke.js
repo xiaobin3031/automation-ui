@@ -7,18 +7,22 @@ import { useState } from "react";
 
 export default function Broke({props:{ broke, handleBroke }}){
 
-  const [ele, setEle] = useState(flowInit.initElement({}))
+  const useEle = !broke.activity && (!broke.activities || broke.activities.length === 0);
+  const [ele, setEle] = useState(useEle ? {...broke.element} : flowInit.initElement({}))
 
-  const [brokeType, setBrokeType] = useState("1");
+  const [brokeType, setBrokeType] = useState(useEle ? "1" : "2");
 
   function handleEle(updateEle){
     setEle({...ele, ...updateEle})
     broke.element = ele;
+    broke.activities = [];
     handleBroke(broke);
   }
 
   function handleActivity(event){
     broke.activities = Array.from(event.target.selectedOptions).map(a => a.value);
+    broke.element = flowInit.initElement({});
+    debugger;
     handleBroke(broke);
   }
 

@@ -1,4 +1,6 @@
 import { useState } from "react"
+import Input from "../../component/Input";
+import Label from "../../component/Label";
 import Row from "../../component/Row";
 import FlowList from "./FlowList";
 
@@ -24,8 +26,11 @@ export default function Scene(){
   return (
     <div className="scene">
       <Row>
-        <label>功能名称</label>
-        <input defaultValue={args.name} onChange={changeArgs}/>
+        <Label>功能名称</Label>
+        <Input attrs={{
+          defaultValue: args.name,
+          onChange: changeArgs
+        }}/>
       </Row>
       <FlowList key="" props={{
         flowIdPrefix: 'scene-flow',

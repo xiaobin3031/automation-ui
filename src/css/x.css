@@ -1,0 +1,15 @@
+.x-input {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+.x-input:focus {
+  border-color: rgb(88, 88, 255, 0.8);
+  outline: none;
+  box-shadow: 0 0 8px rgb(88, 88 ,255, 0.8);
+  -webkit-border-color: rgb(88, 88, 255, 0.8);
+}
+
+.x-label {
+
+}
