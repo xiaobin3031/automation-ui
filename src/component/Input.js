@@ -1,8 +1,11 @@
 import '../css/x.css'
 
-export default function Input({inputType='text', attrs}){
-
+export default function Input(props){
+  const _props = {...props};
+  if(!_props.type){
+    _props.type = 'text';
+  }
   return (
-    <input type={inputType} className="x-input" {...attrs}/>
+    <input className="x-input" {..._props}/>
   )
 }

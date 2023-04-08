@@ -1,4 +1,6 @@
 import Row from "../../../component/Row";
+import Input from "../../../component/Input";
+import Label from "../../../component/Label";
 import Broke from "./Broke";
 import FlowList from "../FlowList";
 
@@ -24,12 +26,12 @@ export default function WhileFlow({props: {flow, broke, handleFlow, handleBroke}
         }} />
       </Row>
       <Row>
-        <label>每次循环的间隔: </label>
-        <input type="number" name="sleepTime" defaultValue={flow.sleepTime} onChange={handleWhile} />
+        <Label>每次循环的间隔: </Label>
+        <Input type="number" name="sleepTime" defaultValue={flow.sleepTime} onChange={handleWhile} />
       </Row>
       <Row>
         <label>最大尝试次数: </label>
-        <input type="number" name="maxCount" defaultValue={flow.maxCount} onChange={handleWhile} />
+        <Input type="number" name="maxCount" defaultValue={flow.maxCount} onChange={handleWhile} />
       </Row>
       <FlowList props={{
         btnName: "循环流程",

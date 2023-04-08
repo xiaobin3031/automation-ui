@@ -3,6 +3,7 @@ import Input from "../../component/Input";
 import Label from "../../component/Label";
 import Row from "../../component/Row";
 import FlowList from "./FlowList";
+import Switch from "../../component/Switch";
 
 export default function Scene(){
 
@@ -26,11 +27,9 @@ export default function Scene(){
   return (
     <div className="scene">
       <Row>
+        <Switch />
         <Label>功能名称</Label>
-        <Input attrs={{
-          defaultValue: args.name,
-          onChange: changeArgs
-        }}/>
+        <Input defaultValue={args.name} onChange={changeArgs}/>
       </Row>
       <FlowList key="" props={{
         flowIdPrefix: 'scene-flow',
