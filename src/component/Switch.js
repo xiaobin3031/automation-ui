@@ -41,11 +41,11 @@ export default function Switch({
 
   return (
     <div className="x-switch">
-      <div className="x-switch-false-name" color={falseColor}>{falseName}</div>
+      <div className="x-switch-false-name x-switch-label" color={falseColor}>{falseName}</div>
       <div className={borderClass.join(' ')}>
         <div className={btnClass.join(' ')} onClick={toggleSwitch}></div>
       </div>
-      <div className="x-switch-true-name" color={trueColor}>{trueName}</div>
+      <div className="x-switch-true-name x-switch-label" color={trueColor}>{trueName}</div>
     </div>
   )
 }

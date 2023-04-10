@@ -35,11 +35,13 @@ select:focus {
 .x-switch > div{
   float: left;
 }
+.x-switch-label {
+  line-height: 100%;
+}
 .x-switch-button-border {
   height: 100%;
   width: 55px;
   border-radius: 30px;
-  box-shadow: 0 0 -8px black;
 }
 .x-switch-button-border-ok {
   background-color: var(--color-success)
