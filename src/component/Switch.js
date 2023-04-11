@@ -1,4 +1,5 @@
 import { useRef, useState } from "react"
+import '../css/switch.css'
 
 const comBtnBorderClass = 'x-switch-button-border', comBtnClass = 'x-switch-button';
 export default function Switch({
