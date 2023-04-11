@@ -7,10 +7,17 @@
   float: left;
 }
 .x-switch-label {
-  line-height: 100%;
+  line-height: 30px;
   height: 100%;
-  font-size: 1.2em;
   padding: 0 5px;
+}
+.x-switch-label-ok {
+  font-weight: bold;
+  color: var(--color-success)
+}
+.x-switch-label-cancel {
+  font-weight: bold;
+  color: var(--color-danger)
 }
 .x-switch-button-border {
   height: 100%;
