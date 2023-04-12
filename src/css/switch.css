@@ -1,5 +1,4 @@
 .x-switch {
-  border: 1px solid black;
   height: 30px;
   display: inline-block;
 }
@@ -9,14 +8,16 @@
 .x-switch-label {
   line-height: 30px;
   height: 100%;
-  padding: 0 5px;
+  padding: 0 8px;
 }
 .x-switch-label-ok {
-  font-weight: bold;
+  text-shadow: .5px 0 0;
+  scale: 1.2;
   color: var(--color-success)
 }
 .x-switch-label-cancel {
-  font-weight: bold;
+  text-shadow: .5px 0 0;
+  scale: 1.2;
   color: var(--color-danger)
 }
 .x-switch-button-border {
@@ -27,32 +28,8 @@
 .x-switch-button-border-ok {
   background-color: var(--color-success)
 }
-.x-switch-button-border-ok-animation {
-  animation: x-switch-button-border-ok .3s cubic-bezier(0.95, 0.1, 0.95, 0.1);
-  animation-fill-mode: forwards;
-}
 .x-switch-button-border-cancel {
   background-color: var(--color-danger)
-}
-.x-switch-button-border-cancel-animation {
-  animation: x-switch-button-border-cancel .3s cubic-bezier(0.95, 0.1, 0.95, 0.1);
-  animation-fill-mode: forwards;
-}
-@keyframes x-switch-button-border-ok {
-  from {
-    background-color: var(--color-danger)
-  }
-  to {
-    background-color: var(--color-success)
-  }
-}
-@keyframes x-switch-button-border-cancel {
-  from {
-    background-color: var(--color-success)
-  }
-  to {
-    background-color: var(--color-danger)
-  }
 }
 .x-switch-button{
   height: calc(100% - 2px);
@@ -67,16 +44,8 @@
 .x-switch-button-ok {
   left: 1px;
 }
-.x-switch-button-ok-animation {
-  animation: x-switch-button-ok-animation .3s cubic-bezier(0.95, 0.1, 0.95, 0.1);
-  animation-fill-mode: forwards;
-}
 .x-switch-button-cancel {
   left: calc(55px - 1px - 30px)
-}
-.x-switch-button-cancel-animation {
-  animation: x-switch-button-cancel-animation .3s cubic-bezier(0.95, 0.1, 0.95, 0.1);
-  animation-fill-mode: forwards;
 }
 @keyframes x-switch-button-cancel-animation {
   from {

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import '../css/switch.css'
 
 const comBtnBorderClass = 'x-switch-button-border', comBtnClass = 'x-switch-button', comLabelClass = "x-switch-label";
@@ -13,6 +13,12 @@ export default function Switch({
   switchChange}
 ){
 
+  const _borderRef = useRef(null);
+  const _buttonRef = useRef(null);
+  const _labelOkRef = useRef(null);
+  const _labelCancelRef = useRef(null);
+  const _animation = useRef(false);
+
   const curVal = useRef(currentValue);
   let _btnClass, _borderClass, _labelOkClass, _labelCancelClass;
   if(curVal.current === okValue){
@@ -26,37 +32,63 @@ export default function Switch({
     _labelOkClass = [comLabelClass];
     _labelCancelClass = [comLabelClass, 'x-switch-label-cancel'];
   }
-  const [btnClass, setBtnClass] = useState(_btnClass);
-  const [borderClass, setBorderClass] = useState(_borderClass);
-  const [labelOkClass, setLabelOkClass] = useState(_labelOkClass);
-  const [labelCancelClass, setLabelCancelClass] = useState(_labelCancelClass);
 
   function toggleSwitch(){
+    if(_animation.current){
+      return;
+    }
     if(curVal.current === okValue){
       curVal.current = cancelValue;
     }else{
       curVal.current = okValue;
     }
     if(curVal.current === okValue){
-      setBtnClass([comBtnClass, 'x-switch-button-ok-animation']);
-      setBorderClass([comBtnBorderClass, 'x-switch-button-border-ok-animation']);
-      setLabelOkClass([comLabelClass, 'x-switch-label-ok']);
-      setLabelCancelClass([comLabelClass]);
+      setAnimation(_buttonRef.current, 'x-switch-button-ok-animation')
+      setAnimation(_labelOkRef.current, 'x-switch-label-ok-animation')
     }else{
-      setBtnClass([comBtnClass, 'x-switch-button-cancel-animation']);
-      setBorderClass([comBtnBorderClass, 'x-switch-button-border-cancel-animation']);
-      setLabelOkClass([comLabelClass]);
-      setLabelCancelClass([comLabelClass, 'x-switch-label-cancel']);
+      setAnimation(_buttonRef.current, 'x-switch-button-cancel-animation')
+      setAnimation(_labelCancelRef.current, 'x-switch-label-cancel-animation')
     }
+  }
+
+  function setAnimation($dom, name){
+    $dom.style.animation = `${name} .3s cubic-bezier(0.95, 0.1, 0.95, 0.1)`;
+    $dom.style.animationFillMode = 'forwards';
+  }
+
+  function buttonAnimationEnd(){
+    if(curVal.current === okValue){
+      _labelOkRef.current.classList.add('x-switch-label-ok');
+      _labelCancelRef.current.classList.remove('x-switch-label-cancel')
+      _borderRef.current.classList.add('x-switch-button-border-ok')
+      _borderRef.current.classList.remove('x-switch-button-border-cancel')
+    }else{
+      _labelOkRef.current.classList.remove('x-switch-label-ok');
+      _labelCancelRef.current.classList.add('x-switch-label-cancel')
+      _borderRef.current.classList.remove('x-switch-button-border-ok')
+      _borderRef.current.classList.add('x-switch-button-border-cancel')
+    }
+    _animation.current = false;
+    if(!!switchChange && typeof switchChange === 'function'){
+      switchChange(curVal.current);
+    }
+  }
+
+  function buttonAnimationStart(){
+    _animation.current = true;
   }
 
   return (
     <div className="x-switch">
-      <div className={labelOkClass.join(' ')} color={falseColor}>{falseName}</div>
-      <div className={borderClass.join(' ')}>
-        <div className={btnClass.join(' ')} onClick={toggleSwitch}></div>
+      <div className={_labelOkClass.join(' ')} color={trueColor} ref={_labelOkRef}>{trueName}</div>
+      <div className={_borderClass.join(' ')} ref={_borderRef}>
+        <div className={_btnClass.join(' ')} 
+          onClick={toggleSwitch} ref={_buttonRef} 
+          onAnimationEnd={buttonAnimationEnd}
+          onAnimationStart={buttonAnimationStart}
+        ></div>
       </div>
-      <div className={labelCancelClass.join(' ')} color={trueColor}>{trueName}</div>
+      <div className={_labelCancelClass.join(' ')} color={falseColor} ref={_labelCancelRef}>{falseName}</div>
     </div>
   )
 }
