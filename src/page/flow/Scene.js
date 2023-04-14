@@ -4,6 +4,8 @@ import Label from "../../component/Label";
 import Row from "../../component/Row";
 import FlowList from "./FlowList";
 import Switch from "../../component/Switch";
+import Icon from "../../component/Icon";
+import { Accordion, AccordionContent, AccordionHeader, AccordionItem } from "../../component/Accordion";
 
 export default function Scene(){
 
@@ -28,6 +30,17 @@ export default function Scene(){
     <div className="scene">
       <Row>
         <Switch />
+        <Icon iconType="down" />
+      </Row>
+      <Row>
+        <Accordion>
+          <AccordionItem>
+            <AccordionHeader></AccordionHeader>
+            <AccordionContent></AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </Row>
+      <Row>
         <Label>功能名称</Label>
         <Input defaultValue={args.name} onChange={changeArgs}/>
       </Row>
