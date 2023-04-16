@@ -4,7 +4,7 @@ const images = resource.keys().reduce((b, a) => {
   b[_item.replace(/\..+?$/, '')] = resource(a);
   return b;
 }, {});
-const _initSize = 25;
+const _initSize = 20;
 
 export default function Icon({iconType, size = 'sm', ...props}){
 

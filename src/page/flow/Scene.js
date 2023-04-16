@@ -5,7 +5,18 @@ import Row from "../../component/Row";
 import FlowList from "./FlowList";
 import Switch from "../../component/Switch";
 import Icon from "../../component/Icon";
-import { Accordion, AccordionContent, AccordionHeader, AccordionItem } from "../../component/Accordion";
+import { Accordion } from "../../component/Accordion";
+
+const accordionList = [
+  {
+    _title: "Accordion Item",
+    _content: "GoGoGo"
+  },
+  {
+    _title: "Account Item 2",
+    _content: "GoGoGo2"
+  }
+];
 
 export default function Scene(){
 
@@ -33,12 +44,9 @@ export default function Scene(){
         <Icon iconType="down" />
       </Row>
       <Row>
-        <Accordion>
-          <AccordionItem>
-            <AccordionHeader></AccordionHeader>
-            <AccordionContent></AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <Accordion
+          list={accordionList}
+        />
       </Row>
       <Row>
         <Label>功能名称</Label>
