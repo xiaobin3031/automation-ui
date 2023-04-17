@@ -72,7 +72,7 @@ export default function Alert({
   }
 
   function removeNode(){
-    _alertRef.current.parentNode.remove(_alertRef.current);
+    _alertRef.current.parentNode.removeChild(_alertRef.current);
   }
 
   function mouseEnterAlert(){

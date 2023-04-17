@@ -39,6 +39,8 @@
 }
 .x-alert > .content {
   padding: 10px 30px;
+}
+.x-alert > .header + .content {
   border-top: 1px solid #c3c3c3;
 }
 .x-alert > .content > .close-icon {
