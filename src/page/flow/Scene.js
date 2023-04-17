@@ -51,7 +51,7 @@ export default function Scene(){
         />
       </Row>
       <Row>
-        <Alert type='success' title="测试" closeable/>
+        <Alert type='success' closeable content="GoGoGo"/>
       </Row>
       <Row>
         <Label>功能名称</Label>
