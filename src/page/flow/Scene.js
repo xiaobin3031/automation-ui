@@ -6,6 +6,7 @@ import FlowList from "./FlowList";
 import Switch from "../../component/Switch";
 import Icon from "../../component/Icon";
 import { Accordion } from "../../component/Accordion";
+import Alert from "../../component/Alert";
 
 const accordionList = [
   {
@@ -48,6 +49,9 @@ export default function Scene(){
           list={accordionList}
           openOne
         />
+      </Row>
+      <Row>
+        <Alert type='success' title="测试" closeable/>
       </Row>
       <Row>
         <Label>功能名称</Label>
