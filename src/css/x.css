@@ -41,14 +41,3 @@ select:focus {
     scale: 0;
   }
 }
-@keyframes wait-before-scale-disappear {
-  0% {
-    scale: 1;
-  }
-  90% {
-    scale: 1;
-  }
-  100% {
-    scale: 0;
-  }
-}

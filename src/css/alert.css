@@ -19,7 +19,8 @@
   border-color: var(--color-warning);
 }
 .x-alert.close-auto {
-  animation: wait-before-scale-disappear 5s ease;
+  animation: scale-disappear 0.5s ease;
+  animation-delay: 4s;
   animation-fill-mode: forwards;
 }
 .x-alert.close-focus {
