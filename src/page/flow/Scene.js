@@ -8,7 +8,7 @@ import Icon from "../../component/Icon";
 import { Accordion } from "../../component/Accordion";
 import Alert from "../../component/Alert";
 import Breadcrumb from "../../component/Breadcrumb";
-import Button from "../../component/Button";
+import { Button, ButtonGroup } from "../../component/Button";
 
 const accordionList = [
   {
@@ -53,8 +53,8 @@ export default function Scene(){
         />
       </Row>
       <Row>
-        <Alert color='success' title="title" closeable content="GoGoGo"/>
-        <Alert color='warning' closeable clickToClose content={
+        <Alert color='success' title="title" closeable={false} content="GoGoGo"/>
+        <Alert color='warning' closeable={false} clickToClose content={
           <div>
             aaaaaaaa<a href="https://www.baidu.com">click me</a> gggggggggg
           </div>
@@ -88,6 +88,55 @@ export default function Scene(){
         <Button color='danger'>添加</Button>
         <Button color='success'>添加</Button>
         <Button color='warning'>添加</Button>
+      </Row>
+      <Row>
+        <ButtonGroup
+          list={[
+            {
+              _text: 'Create',
+              _color: 'primary'
+            },
+            {
+              _text: 'Create',
+              _color: 'danger',
+              _outline: true
+            },
+            {
+              _text: 'Create',
+              _color: 'success'
+            },
+            {
+              _text: 'Create',
+              _color: 'warning',
+              _outline: true
+            }
+          ]}
+         />
+      </Row>
+      <Row>
+        <ButtonGroup
+          groupType="radio"
+          list={[
+            {
+              _text: 'Create',
+              _color: 'primary'
+            },
+            {
+              _text: 'Create',
+              _color: 'danger',
+              _outline: true
+            },
+            {
+              _text: 'Create',
+              _color: 'success'
+            },
+            {
+              _text: 'Create',
+              _color: 'warning',
+              _outline: true
+            }
+          ]}
+         />
       </Row>
       <Row>
         <Label>功能名称</Label>
