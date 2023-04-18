@@ -7,6 +7,7 @@ import Switch from "../../component/Switch";
 import Icon from "../../component/Icon";
 import { Accordion } from "../../component/Accordion";
 import Alert from "../../component/Alert";
+import Breadcrumb from "../../component/Breadcrumb";
 
 const accordionList = [
   {
@@ -57,6 +58,23 @@ export default function Scene(){
             aaaaaaaa<a href="https://www.baidu.com">click me</a> gggggggggg
           </div>
         }/>
+      </Row>
+      <Row>
+        <Breadcrumb
+          list={[
+            {_text: "Home", _link: "www.baidu.com"},
+            {_text: "First"}
+          ]}
+         />
+      </Row>
+      <Row>
+        <Breadcrumb
+          list={[
+            {_text: "Home", _link: "www.baidu.com"},
+            {_text: "First"}
+          ]}
+          separate=">"
+         />
       </Row>
       <Row>
         <Label>功能名称</Label>
