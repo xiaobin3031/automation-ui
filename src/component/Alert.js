@@ -55,11 +55,11 @@ function AlertContent({content, closeable, closeAlert}){
 }
 
 export default function Alert({
-  type, titleIcon, title, subTitle, content, closeable=true, clickToClose=false
+  color, titleIcon, title, subTitle, content, closeable=true, clickToClose=false
 }){
 
   const _alertRef = useRef(null);
-  let _classList = type;
+  let _classList = color;
   if(!!closeable){
     _classList += ' close-auto';
   }

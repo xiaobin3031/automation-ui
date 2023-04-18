@@ -51,8 +51,8 @@ export default function Scene(){
         />
       </Row>
       <Row>
-        <Alert type='success' title="title" closeable content="GoGoGo"/>
-        <Alert type='warning' closeable clickToClose content={
+        <Alert color='success' title="title" closeable content="GoGoGo"/>
+        <Alert color='warning' closeable clickToClose content={
           <div>
             aaaaaaaa<a href="https://www.baidu.com">click me</a> gggggggggg
           </div>
