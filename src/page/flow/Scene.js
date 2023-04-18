@@ -8,6 +8,7 @@ import Icon from "../../component/Icon";
 import { Accordion } from "../../component/Accordion";
 import Alert from "../../component/Alert";
 import Breadcrumb from "../../component/Breadcrumb";
+import Button from "../../component/Button";
 
 const accordionList = [
   {
@@ -75,6 +76,9 @@ export default function Scene(){
           ]}
           separate=">"
          />
+      </Row>
+      <Row>
+        <Button color='primary' outline>添加</Button>
       </Row>
       <Row>
         <Label>功能名称</Label>
