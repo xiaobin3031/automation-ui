@@ -79,6 +79,15 @@ export default function Scene(){
       </Row>
       <Row>
         <Button color='primary' outline>添加</Button>
+        <Button color='danger' outline>添加</Button>
+        <Button color='success' outline>添加</Button>
+        <Button color='warning' outline>添加</Button>
+      </Row>
+      <Row>
+        <Button color='primary'>添加</Button>
+        <Button color='danger'>添加</Button>
+        <Button color='success'>添加</Button>
+        <Button color='warning'>添加</Button>
       </Row>
       <Row>
         <Label>功能名称</Label>
