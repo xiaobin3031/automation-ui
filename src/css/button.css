@@ -66,6 +66,3 @@
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.x-button-group > .x-button > input[type="radio"] {
-  display: none;
-}
