@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import '../css/button.css'
-import Label from './Label';
 
 let buttonGlobalId = 1;
 const defaultProps = {
@@ -11,7 +10,7 @@ const defaultProps = {
   value: '_value',
   clickBtn: '_clickBtn'
 };
-export function Button({children, type="button", color, outline, clickBtn, ...props}){
+export function Button({children, type="button", color, outline, ...props}){
 
   const _classList = ['x-button', color];
   if(outline){
@@ -19,22 +18,27 @@ export function Button({children, type="button", color, outline, clickBtn, ...pr
   }
 
   return (
-    <button className={_classList.join(' ')} type={type} {...props} onClick={event => !!clickBtn ? clickBtn(event) : ""}>{children}</button>
+    <button className={_classList.join(' ')} type={type} {...props}>{children}</button>
   )
 }
 
-function CheckboxGroup({list, valueCheck}){
-
-}
-function RadioGroup({list, ...props}){
+function CheckboxGroup({list, ...props}){
   const _props = {...defaultProps, ...props};
 
-  const _checks = useRef(list.map(a => false));
+  const _checks = useRef(list.map(() => false));
 
-  const _radioName = `radio-name-${buttonGlobalId++}`
-
-  function checkedButton(index){
-
+  function checkedButton(event, index){
+    _checks.current[index] = !_checks.current[index];
+    if(_checks.current[index]){
+      event.target.classList.add('active');
+    }else{
+      event.target.classList.remove('active');
+    }
+    if(!!_props.valueCheck){
+      _props.valueCheck(
+        list.filter((_, index) => _checks.current[index])
+      );
+    }
   }
 
   return (
@@ -43,7 +47,30 @@ function RadioGroup({list, ...props}){
         type={a[_props.type]}
         color={a[_props.color]}
         outline
-        onClick={() => checkedButton(index)}
+        onClick={(event) => checkedButton(event, index)}
+       >{a[_props.text]}</Button>
+    })
+  )
+}
+
+function RadioGroup({list, ...props}){
+  const _props = {...defaultProps, ...props};
+
+  function checkedButton(event, item){
+    if(!!_props.valueCheck){
+      _props.valueCheck(item);
+    }
+    Array.from(event.target.parentNode.children).filter(a => a.classList.contains('active')).forEach(a => a.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  return (
+    list.map((a) => {
+      return <Button key={`x-button-group-button-${buttonGlobalId++}`}
+        type={a[_props.type]}
+        color={a[_props.color]}
+        outline
+        onClick={(event) => checkedButton(event, a)}
        >{a[_props.text]}</Button>
     })
   )
@@ -58,7 +85,7 @@ function InnerButtonGroup({list, ...props}){
         type={a[_props.type]}
         color={a[_props.color]}
         outline={a[_props.outline]}
-        clickBtn={a[_props.clickBtn]}
+        onClick={a[_props.clickBtn]}
        >{a[_props.text]}</Button>
     })
   )

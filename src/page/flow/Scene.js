@@ -139,6 +139,31 @@ export default function Scene(){
          />
       </Row>
       <Row>
+        <ButtonGroup
+          groupType="checkbox"
+          list={[
+            {
+              _text: 'Create',
+              _color: 'primary'
+            },
+            {
+              _text: 'Create',
+              _color: 'danger',
+              _outline: true
+            },
+            {
+              _text: 'Create',
+              _color: 'success'
+            },
+            {
+              _text: 'Create',
+              _color: 'warning',
+              _outline: true
+            }
+          ]}
+         />
+      </Row>
+      <Row>
         <Label>功能名称</Label>
         <Input defaultValue={args.name} onChange={changeArgs}/>
       </Row>
